@@ -4,10 +4,11 @@
 */
 axios.get('https://api.github.com/users/furnowest')
 .then((response)=>{
-  console.log(response)
+  let myCard =cardMaker(response.data)
+  newCard.appendChild(myCard)
 })
 .catch((err) =>{
-  console.log(err)
+  console.log('error', err);
 });
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
@@ -31,7 +32,14 @@ axios.get('https://api.github.com/users/furnowest')
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+// const followersArray = [];
+const followersArray = [
+  'tetondan',
+  'dustinmyers',
+  'justsml',
+  'luishrd',
+  'bigknell'
+];
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
@@ -60,11 +68,51 @@ const followersArray = [];
   luishrd
   bigknell
 */
-function cardcomponent(cardData){
-  const card =document.createElement('div')
+function cardMaker(object){
+  let card =document.createElement('div')
   card.classList.add("card")
 
-  const image =document.createElement('img')
-  image.scr =${}
+  let image =document.createElement('img')
+  let cardInfo = document.createElement('div')
+  cardInfo.classList.add('name')
+
+  let username =document.createElement('p')
+  username.classList.add('username')
+  let name =document.createElement('h3')
+  name.classList.add('name')
+
+  let location = document.createElement("p")
+  let profile = document.createElement("p")
+  let link = document.createElement("a")
+  let followers = document.createElement("p")
+  let following = document.createElement("p")
+  let bio = document.createElement("p")
+
+ image.src = object.avatar_url;
+ name.textContent = object.name;
+ username.textContent = object.login;
+ location.textContent = (`Location: ${object.location}`);
+ profile.textContent = (`Profile: ${link}`);
+ link.textContent = object.html_url;
+ followers.textContent = (`Followers: ${object.followers}`);
+ following.textContent = (`Following: ${object.following}`);
+ bio.textContent = (`Bio: ${object.bio}`);
+
+ card.appendChild(image);
+ card.appendChild(cardInfo);
+ cardInfo.appendChild(name);
+ cardInfo.appendChild(username);
+ cardInfo.appendChild(location);
+ cardInfo.appendChild(profile);
+ cardInfo.appendChild(followers);
+ cardInfo.appendChild(following);
+ cardInfo.appendChild(bio);
+ profile.appendChild(link);
+
+ return card;
 }
+let newCard = document.querySelector(".cards"); 
+
+
+
 
